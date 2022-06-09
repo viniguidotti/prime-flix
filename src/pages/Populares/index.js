@@ -1,16 +1,14 @@
 import api from '../../services/api';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import './home.css';
+import './popular.css';
 
-//URL: movie/now_playing?api_key=a8dcc7670d0c326f01b7099dafa92c9c
-
-function Home(){
-    const [filmes, setFilmes] = useState([]);
+function Populares(){
+    const [filmesPopulares, setFilmesPopulares] = useState([]);
 
     useEffect(() => {
-        async function loadFilmes(){
-            const response = await api.get("movie/now_playing", {
+        async function loadFilmesPopulares(){
+            const response = await api.get("movie/popular", {
                 params: {
                     api_key: 'a8dcc7670d0c326f01b7099dafa92c9c',
                     language: 'pt-BR',
@@ -18,17 +16,17 @@ function Home(){
                 }
             })
 
-            setFilmes(response.data.results);
+            setFilmesPopulares(response.data.results);
         }
 
-        loadFilmes();
+        loadFilmesPopulares();
 
     }, [])
 
     return(
         <div className='container'>
-            <div className='lista-filmes'>
-                {filmes.map((filme) => {
+            <div className='lista-filmes-populares'>
+                {filmesPopulares.map((filme) => {
                     return(
                         <article key={filme.id}>
                             <strong>{filme.title}</strong>
@@ -42,4 +40,4 @@ function Home(){
     )
 }
 
-export default Home;
+export default Populares;

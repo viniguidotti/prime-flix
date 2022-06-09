@@ -6,6 +6,7 @@ function Header(){
         <header>
             <Link className="logo" to='/'>Prime Flix</Link>
             <Link className="favoritos" to='/favoritos'>Meus Filmes</Link>
+            <Link className="populares" to='/populares'>Populares</Link>
         </header>
     )
 }
