@@ -1,26 +1,28 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import api from '../../services/api';
 import './filme-info.css';
+import { toast } from 'react-toastify';
 
 function Filme(){
     const { id } = useParams();
     const [filme, setFilme] = useState({});
     const [loading, setLoading] = useState(true);
+    const navigate = useNavigate();
 
     useEffect(() => {
         async function loadFilme(){
-            const response = await api.get(`/movie/${id}`, {
+            await api.get(`movie/${id}`, {
                 params: {
                     api_key: 'a8dcc7670d0c326f01b7099dafa92c9c',
                     language: 'pt-BR'
                 }
             }).then((response)=> {
-                console.log(response);
                 setFilme(response.data);
                 setLoading(false);
             }).catch(()=>{
-                console.log("Filme não encontrado")
+                navigate("/", { replace: true });
+                return;
             })
         }
 
@@ -30,7 +32,26 @@ function Filme(){
             console.log("COMPONENTE DESMONTADO");
         }
 
-    }, [])
+    }, [id, navigate])
+
+    function salvarFilme(){
+        const lista = localStorage.getItem("@primeflix");
+
+        let filmesSalvos = JSON.parse(lista) || [];
+
+        const hasFilme = filmesSalvos.some( (filmeSalvo) => filmeSalvo.id === filme.id);
+
+        if (hasFilme){
+            toast.warn("Este filme já está na sua lista");
+            return;
+        }
+
+        filmesSalvos.push(filme);
+        localStorage.setItem("@primeflix", JSON.stringify(filmesSalvos));
+
+        toast.success("Filme salvo com sucesso!");
+
+    }
 
     if (loading) {
         return(
@@ -52,9 +73,9 @@ function Filme(){
             <strong>Avaliação: {filme.vote_average} / 10</strong>
 
             <div className='area-buttons'>
-                <button>Salvar</button>
+                <button onClick={salvarFilme}>Salvar</button>
                 <button>
-                    <a href={filme.homepage}>
+                    <a target="blank" rel="noreferrer" href={`https://youtube.com/results?search_query=${filme.title} Trailer`}>
                     Trailer
                     </a>
                 </button>
