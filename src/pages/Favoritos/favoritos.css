@@ -10,6 +10,7 @@
 }
 
 .meus-filmes span{
+    margin-top: 14px;
     font-size: 18px;
 }
 
@@ -33,6 +34,35 @@
 
 .meus-filmes div a{
     text-decoration: none;
-    color: #116feb;
     margin-right: 14px;
+}
+
+.meus-filmes button{
+    margin-right: 12px;
+    margin-top: 14px;
+    margin-left: 0;
+    font-size: 20px;
+    border: 0;
+    outline: none;
+    padding: 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.4s;
+    text-decoration: none;
+    background-color: rgb(255, 216, 223);
+}
+
+.meus-filmes button:hover{
+    background-color: brown;
+    color: #FFF;
+}
+
+.meus-filmes a{
+    text-decoration: none;
+    color: #000;
+    transition: all 0.4s;
+}
+
+.meus-filmes a:hover{
+    color: #FFF;
 }
